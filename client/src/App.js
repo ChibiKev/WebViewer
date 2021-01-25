@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,20 +6,24 @@ import {
 } from 'react-router-dom';
 import './App.css';
 
-const Home = lazy(() => import('./components/MainPages/Home/Home'));
+const Home = lazy(() => import('./components/Home/Home'));
 
-class App extends React.Component {
-  render() {
-    return (
-      <Router>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-          </Switch>
-        </Suspense>
-      </Router>
-    );
+const App = () => {
+  const [site, setSite] = useState([])
+
+  const addSite = (site) => {
+    setSite(site);
   }
+
+  return (
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route exact path="/" render={() => <Home onAdd={addSite}/> } />
+        </Switch>
+      </Suspense>
+    </Router>
+  );
 }
 
 export default App;
