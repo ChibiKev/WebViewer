@@ -2,16 +2,16 @@ import { useState } from 'react';
 import './Home.css';
 
 const Home = ({onAdd}) => {
-  const [text, setText] = useState('');
+  const [site, setSite] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!text) {
+    if (!site) {
       alert('Please Add A Site');
       return;
     }
-    onAdd({ text });
-    setText('');
+    onAdd(site);
+    setSite('');
   }
 
   return (
@@ -23,8 +23,8 @@ const Home = ({onAdd}) => {
           <input
             type='text'
             placeholder='Add Site'
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={site}
+            onChange={(e) => setSite(e.target.value)}
           />
         </div>
 

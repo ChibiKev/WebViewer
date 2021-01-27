@@ -9,10 +9,17 @@ import './App.css';
 const Home = lazy(() => import('./components/Home/Home'));
 
 const App = () => {
-  const [site, setSite] = useState([])
+  const [site, setSite] = useState('')
+  const [image, setImage] = useState('')
 
   const addSite = (site) => {
     setSite(site);
+    fetch(`/screenshot?url=${site}`)
+      .then(response => {
+        console.log(response)
+        setImage(response.url)
+      })
+      .catch(error => {console.log(error)})
   }
 
   return (
@@ -22,6 +29,7 @@ const App = () => {
           <Route exact path="/" render={() => <Home onAdd={addSite}/> } />
         </Switch>
       </Suspense>
+      <img src={image} alt="Website" />
     </Router>
   );
 }
