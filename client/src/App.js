@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 
-const Home = lazy(() => import('./components/Home/Home'));
+const Home = lazy(() => import('./components/Search/Search'));
 
 const App = () => {
   const [site, setSite] = useState('')
@@ -26,10 +26,9 @@ const App = () => {
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
-          <Route exact path="/" render={() => <Home onAdd={addSite}/> } />
+          <Route exact path="/" render={() => <Home onAdd={addSite} Image={image}/> } />
         </Switch>
       </Suspense>
-      <img src={image} alt="Website" />
     </Router>
   );
 }

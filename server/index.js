@@ -11,8 +11,8 @@ app.get('/screenshot', async (req, res) => {
 
   // Respond with the image
   res.writeHead(200, {
-      'Content-Type': 'image/png',
-      'Content-Length': screenshotBuffer.length
+    'Content-Type': 'image/png',
+    'Content-Length': screenshotBuffer.length
   });
   res.end(screenshotBuffer);
 
