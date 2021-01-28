@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Search.css';
 
-const Search = ({onAdd}) => {
+const Search = ({siteChange}) => {
   const [site, setSite] = useState('');
 
   const onSubmit = (e) => {
@@ -10,7 +10,7 @@ const Search = ({onAdd}) => {
       alert('Please Add A Site');
       return;
     }
-    onAdd(site);
+    siteChange(site);
     setSite('');
   }
 
