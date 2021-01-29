@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import Search from '../Search/Search';
-import ImageViewer from '../ImageViewer/ImageViewer';
+import Search from '../../components/Search/Search';
+import ImageViewer from '../../components/ImageViewer/ImageViewer';
 
-const Home = () => {
+const Viewer = () => {
   const [site, setSite] = useState('')
   const [image, setImage] = useState('')
 
@@ -26,4 +26,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default Viewer;
