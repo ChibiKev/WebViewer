@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Container } from 'semantic-ui-react'
 import Search from '../../components/Search/Search';
 import ImageViewer from '../../components/ImageViewer/ImageViewer';
 
@@ -19,10 +20,10 @@ const Viewer = () => {
   );
 
   return (
-    <>
+    <Container>
       <Search siteChange={(siteChange) => setSite(siteChange)} />
       <ImageViewer Image={image} />
-    </>
+    </Container>
   );
 }
 

@@ -3,7 +3,7 @@ import { Menu } from 'semantic-ui-react';
 
 const Navbar = () => {  
   return (
-    <Menu inverted size='large' style={{borderRadius: 0}}>
+    <Menu inverted size='large' style={{borderRadius: 0, marginBottom: '5px'}}>
       <Menu.Item header as={Link} to={'/'}>Viewer</Menu.Item>
       <Menu.Item as={Link} to={'/'}>Home</Menu.Item>
       <Menu.Item as={Link} to={'/Viewer'}>View Page</Menu.Item>

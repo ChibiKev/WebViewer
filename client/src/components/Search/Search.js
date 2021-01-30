@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Input } from 'semantic-ui-react';
+
 import './Search.css';
 
 const Search = ({siteChange}) => {
@@ -10,23 +12,21 @@ const Search = ({siteChange}) => {
       alert('Please Add A Site');
       return;
     }
-    siteChange(site);
+    siteChange("http://" + site);
     setSite('');
   }
 
   return (
     <>
       <form onSubmit={onSubmit}>
-        <div className='form-control'>
-          <label>Add Site</label>
-          <input
-            type='text'
-            placeholder='Add Site'
-            value={site}
-            onChange={(e) => setSite(e.target.value)}
-          />
-        </div>
-        <input type='submit' value='Set Site' className='btn btn-block' />
+        <Input
+          icon={{ name: 'search', circular: true, link: true }}
+          label='http://'
+          placeholder='example.com'
+          value={site}
+          onChange={(e) => setSite(e.target.value)}
+          fluid
+        />
       </form>
     </>
   );
