@@ -5,14 +5,14 @@ import ImageViewer from '../../components/ImageViewer/ImageViewer';
 
 const Viewer = () => {
   const [site, setSite] = useState('')
-  const [image, setImage] = useState('')
+  const [webView, setWebView] = useState('')
 
   useEffect(
     () => {
       fetch(`/screenshot?url=${site}`)
       .then(response => {
         console.log(response)
-        setImage(response.url)
+        setWebView(response.url)
       })
       .catch(error => {console.log(error)})
     },
@@ -22,7 +22,7 @@ const Viewer = () => {
   return (
     <Container>
       <Search siteChange={(siteChange) => setSite(siteChange)} />
-      <ImageViewer Image={image} />
+      <ImageViewer WebView={webView} Site={site} />
     </Container>
   );
 }

@@ -1,8 +1,17 @@
-const ImageViewer = ({Image}) => {
+import { Grid, Label, Image } from 'semantic-ui-react';
+
+const ImageViewer = ({WebView, Site}) => {
   return (
-    <>
-      <img src={Image} alt=""/>
-    </>
+    <Grid>
+      <Grid.Column textAlign="center">
+        <Image src={WebView} rounded fluid/>
+        {Site && 
+          <Label basic pointing>
+            {Site}
+          </Label> 
+        }
+      </Grid.Column>
+    </Grid>
   );
 }
 
