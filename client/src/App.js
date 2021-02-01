@@ -9,6 +9,7 @@ import './App.css';
 import Navbar from '../src/pages/Navbar/Navbar';
 const Home = lazy(() => import('./pages/Home/Home'));
 const Viewer = lazy(() => import('./pages/Viewer/Viewer'));
+const Functions = lazy(() => import('./pages/Functions/Functions'));
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/Viewer" component={Viewer} />
+          <Route path="/Functions" component={Functions} />
         </Switch>
       </Suspense>
     </Router>

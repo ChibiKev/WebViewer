@@ -4,7 +4,7 @@ const ImageViewer = ({WebView, Site}) => {
   return (
     <Grid>
       <Grid.Column textAlign="center">
-        <Image src={WebView} rounded fluid/>
+        <Image src={WebView} alt="" rounded fluid/>
         {Site && 
           <Label basic pointing>
             {Site}

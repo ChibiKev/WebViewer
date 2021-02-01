@@ -7,6 +7,7 @@ const Navbar = () => {
       <Menu.Item header as={Link} to={'/'}>Viewer</Menu.Item>
       <Menu.Item as={Link} to={'/'}>Home</Menu.Item>
       <Menu.Item as={Link} to={'/Viewer'}>View Page</Menu.Item>
+      <Menu.Item as={Link} to={'/Functions'}>Functions</Menu.Item>
     </Menu>
   );
 }
