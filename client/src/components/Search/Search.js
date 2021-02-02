@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import { Input } from 'semantic-ui-react';
+import { Form, Input, Dropdown, Button } from 'semantic-ui-react';
 
 import './Search.css';
 
-const Search = ({siteChange}) => {
+const Search = ({siteChange, functionChange}) => {
   const [site, setSite] = useState('');
+  const [functions, setFunctions] = useState('');
+
+  const functionOptions = [
+    { key: 'view', value: 'view', text: 'View' },
+    { key: 'refresh', value: 'refresh', text: 'Refresh' },
+  ]
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -12,22 +18,40 @@ const Search = ({siteChange}) => {
       alert('Please Add A Site');
       return;
     }
+    if (!functions) {
+      alert('Please Select A Function');
+      return;
+    }
     siteChange("http://" + site);
+    functionChange(functions);
     setSite('');
+    setFunctions('');
   }
 
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <Input
-          icon={{ name: 'search', circular: true, link: true }}
-          label='http://'
-          placeholder='example.com'
-          value={site}
-          onChange={(e) => setSite(e.target.value)}
-          fluid
-        />
-      </form>
+      <Form onSubmit={onSubmit}>
+        <Form.Field>
+          <Input
+            label='http://'
+            placeholder='example.com'
+            value={site}
+            fluid
+            onChange={(e) => setSite(e.target.value)}
+          />
+        </Form.Field>
+        <Form.Field>
+          <Dropdown
+            onChange={(e, data) =>  setFunctions(data.value)}
+            placeholder='Select Function'
+            search
+            selection
+            fluid
+            options={functionOptions}
+          />
+        </Form.Field>
+        <Button type='submit' onClick={onSubmit}>Submit</Button>
+      </Form>
     </>
   );
 }
