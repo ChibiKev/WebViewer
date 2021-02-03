@@ -6,6 +6,7 @@ import ImageViewer from '../../components/ImageViewer/ImageViewer';
 const Viewer = () => {
   const [site, setSite] = useState('');
   const [functions, setFunctions] = useState('');
+  const [timer, setTimer] = useState('');
   const [webView, setWebView] = useState('');
 
   useEffect(
@@ -22,7 +23,7 @@ const Viewer = () => {
 
   return (
     <Container>
-      <Search siteChange={(siteChange) => setSite(siteChange)} functionChange={(functionChange) => setFunctions(functionChange)} />
+      <Search siteChange={(siteChange) => setSite(siteChange)} functionChange={(functionChange) => setFunctions(functionChange)} timerChange={(timerChange) => setTimer(timerChange)}/>
       <ImageViewer WebView={webView} Site={site} />
     </Container>
   );

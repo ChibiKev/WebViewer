@@ -3,9 +3,10 @@ import { Form, Input, Dropdown, Button } from 'semantic-ui-react';
 
 import './Search.css';
 
-const Search = ({siteChange, functionChange}) => {
+const Search = ({siteChange, functionChange, timerChange}) => {
   const [site, setSite] = useState('');
   const [functions, setFunctions] = useState('');
+  const [timer, setTimer] = useState('');
 
   const functionOptions = [
     { key: 'view', value: 'view', text: 'View' },
@@ -22,10 +23,13 @@ const Search = ({siteChange, functionChange}) => {
       alert('Please Select A Function');
       return;
     }
+    if (functions === 'refresh' && !timer) {
+      alert('Please Select A Valid Timer');
+      return;
+    }
     siteChange("http://" + site);
     functionChange(functions);
-    setSite('');
-    setFunctions('');
+    timerChange(timer);
   }
 
   return (
@@ -50,6 +54,21 @@ const Search = ({siteChange, functionChange}) => {
             options={functionOptions}
           />
         </Form.Field>
+        {functions === 'refresh' && 
+          <Form.Field>
+            <Input
+              placeholder='Amount in Seconds'
+              value={timer}
+              type="number"
+              min="1"
+              step="1"
+              fluid
+              labelPosition='right'
+              label='Seconds'
+              onChange={(e) => setTimer(e.target.value)}
+            />
+          </Form.Field>
+        }
         <Button type='submit' onClick={onSubmit}>Submit</Button>
       </Form>
     </>
