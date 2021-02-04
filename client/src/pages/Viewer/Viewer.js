@@ -11,14 +11,34 @@ const Viewer = () => {
 
   useEffect(
     () => {
-      fetch(`/screenshot?url=${site}`)
-      .then(response => {
-        console.log(response)
-        setWebView(response.url)
-      })
-      .catch(error => {console.log(error)})
+      const viewFunction = () => {
+        return fetch(`/view?url=${site}`)
+        .then(response => {
+          console.log(response)
+          setWebView(response.url)
+        })
+        .catch(error => {console.log(error)})
+      }
+      const refreshFunction = () => {
+        return fetch(`/view?url=${site}`)
+        .then(response => {
+          console.log(response)
+          setWebView(response.url)
+        })
+        .catch(error => {console.log(error)})
+      }
+      if(functions === 'view'){
+        viewFunction();
+      }
+      else if(functions === 'refresh'){
+        var intervalId = window.setInterval(function(){
+          /// call your function here
+          refreshFunction()
+        }, timer*1000);
+      }
+      clearInterval(intervalId) 
     },
-    [site],
+    [site, functions, timer],
   );
 
   return (

@@ -3,7 +3,7 @@ const express = require('express');
 
 const app = express();
 
-app.get('/screenshot', async (req, res) => {
+app.get('/view', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(req.query.url); // URL is given by the "user" (your client-side application)
