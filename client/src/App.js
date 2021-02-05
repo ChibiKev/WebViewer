@@ -8,7 +8,7 @@ import './App.css';
 
 import Navbar from '../src/pages/Navbar/Navbar';
 const Home = lazy(() => import('./pages/Home/Home'));
-const Viewer = lazy(() => import('./pages/Viewer/Viewer'));
+const Single = lazy(() => import('./pages/Single/Single'));
 const Functions = lazy(() => import('./pages/Functions/Functions'));
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/Viewer" component={Viewer} />
+          <Route path="/Single" component={Single} />
           <Route path="/Functions" component={Functions} />
         </Switch>
       </Suspense>

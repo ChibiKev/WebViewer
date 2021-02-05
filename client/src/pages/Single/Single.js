@@ -3,7 +3,7 @@ import { Container } from 'semantic-ui-react'
 import Search from '../../components/Search/Search';
 import ImageViewer from '../../components/ImageViewer/ImageViewer';
 
-const Viewer = () => {
+const Single = () => {
   const [site, setSite] = useState('');
   const [functions, setFunctions] = useState('');
   const [timer, setTimer] = useState('');
@@ -14,14 +14,7 @@ const Viewer = () => {
       const viewFunction = () => {
         return fetch(`/view?url=${site}`)
         .then(response => {
-          console.log(response)
-          setWebView(response.url)
-        })
-        .catch(error => {console.log(error)})
-      }
-      const refreshFunction = () => {
-        return fetch(`/view?url=${site}`)
-        .then(response => {
+          setWebView('')
           console.log(response)
           setWebView(response.url)
         })
@@ -31,12 +24,8 @@ const Viewer = () => {
         viewFunction();
       }
       else if(functions === 'refresh'){
-        var intervalId = window.setInterval(function(){
-          /// call your function here
-          refreshFunction()
-        }, timer*1000);
+        window.setInterval(viewFunction, timer*1000);
       }
-      clearInterval(intervalId) 
     },
     [site, functions, timer],
   );
@@ -49,4 +38,4 @@ const Viewer = () => {
   );
 }
 
-export default Viewer;
+export default Single;
