@@ -3,14 +3,16 @@ import { Form, Input, Dropdown, Button } from 'semantic-ui-react';
 
 import './Search.css';
 
-const Search = ({siteChange, functionChange, timerChange}) => {
+const Search = ({siteChange, functionChange, timerChange, textChange}) => {
   const [site, setSite] = useState('');
   const [functions, setFunctions] = useState('');
   const [timer, setTimer] = useState('');
+  const [text, setText] = useState('');
 
   const functionOptions = [
     { key: 'view', value: 'view', text: 'View' },
     { key: 'refresh', value: 'refresh', text: 'Refresh' },
+    { key: 'find', value: 'find', text: 'Find' },
   ]
 
   const onSubmit = (e) => {
@@ -27,9 +29,14 @@ const Search = ({siteChange, functionChange, timerChange}) => {
       alert('Please Select A Valid Timer');
       return;
     }
+    if (functions === 'find' && !text) {
+      alert('Please Select A Valid Text To Find');
+      return;
+    }
     siteChange("http://" + site);
     functionChange(functions);
     timerChange(timer);
+    textChange(text);
   }
 
   return (
@@ -66,6 +73,17 @@ const Search = ({siteChange, functionChange, timerChange}) => {
               labelPosition='right'
               label='Seconds'
               onChange={(e) => setTimer(e.target.value)}
+            />
+          </Form.Field>
+        }
+        {functions === 'find' && 
+          <Form.Field>
+            <Input
+              placeholder='Find This Text'
+              value={text}
+              type="text"
+              fluid
+              onChange={(e) => setText(e.target.value)}
             />
           </Form.Field>
         }

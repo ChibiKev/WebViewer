@@ -7,6 +7,7 @@ const Single = () => {
   const [site, setSite] = useState('');
   const [functions, setFunctions] = useState('');
   const [timer, setTimer] = useState('');
+  const [text, setText] = useState('');
   const [webView, setWebView] = useState('');
 
   useEffect(
@@ -26,13 +27,20 @@ const Single = () => {
       else if(functions === 'refresh'){
         window.setInterval(viewFunction, timer*1000);
       }
+      else if(functions === 'find'){
+        viewFunction();
+      }
     },
     [site, functions, timer],
   );
 
   return (
     <Container>
-      <Search siteChange={(siteChange) => setSite(siteChange)} functionChange={(functionChange) => setFunctions(functionChange)} timerChange={(timerChange) => setTimer(timerChange)}/>
+      <Search
+        siteChange={(siteChange) => setSite(siteChange)}
+        functionChange={(functionChange) => setFunctions(functionChange)}
+        timerChange={(timerChange) => setTimer(timerChange)}
+        textChange={(textChange) => setText(textChange)} />
       <ImageViewer WebView={webView} Site={site} />
     </Container>
   );
