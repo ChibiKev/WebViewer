@@ -6,6 +6,7 @@ import ImageViewer from '../../components/ImageViewer/ImageViewer';
 const Single = () => {
   const [site, setSite] = useState('');
   const [functions, setFunctions] = useState('');
+  const [view, setView] = useState('');
   const [timer, setTimer] = useState('');
   const [text, setText] = useState('');
   const [webView, setWebView] = useState('');
@@ -38,6 +39,7 @@ const Single = () => {
     <Container>
       <Search
         siteChange={(siteChange) => setSite(siteChange)}
+        viewChange={(viewChange) => setView(viewChange)}
         functionChange={(functionChange) => setFunctions(functionChange)}
         timerChange={(timerChange) => setTimer(timerChange)}
         textChange={(textChange) => setText(textChange)} />

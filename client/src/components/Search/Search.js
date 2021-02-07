@@ -3,9 +3,10 @@ import { Form, Input, Dropdown, Button } from 'semantic-ui-react';
 
 import './Search.css';
 
-const Search = ({siteChange, functionChange, timerChange, textChange}) => {
+const Search = ({siteChange, viewChange, functionChange, timerChange, textChange}) => {
   const [site, setSite] = useState('');
   const [functions, setFunctions] = useState('');
+  const [view, setView] = useState('');
   const [timer, setTimer] = useState('');
   const [text, setText] = useState('');
 
@@ -13,6 +14,11 @@ const Search = ({siteChange, functionChange, timerChange, textChange}) => {
     { key: 'view', value: 'view', text: 'View' },
     { key: 'refresh', value: 'refresh', text: 'Refresh' },
     { key: 'find', value: 'find', text: 'Find' },
+  ]
+
+  const viewOptions = [
+    { key: 'image', value: 'image', text: 'Image' },
+    { key: 'PDF', value: 'PDF', text: 'PDF' },
   ]
 
   const onSubmit = (e) => {
@@ -25,6 +31,10 @@ const Search = ({siteChange, functionChange, timerChange, textChange}) => {
       alert('Please Select A Function');
       return;
     }
+    if (functions === 'view' && !view) {
+      alert('Please Select A View');
+      return;
+    }
     if (functions === 'refresh' && !timer) {
       alert('Please Select A Valid Timer');
       return;
@@ -34,6 +44,7 @@ const Search = ({siteChange, functionChange, timerChange, textChange}) => {
       return;
     }
     siteChange("http://" + site);
+    viewChange(view);
     functionChange(functions);
     timerChange(timer);
     textChange(text);
@@ -61,6 +72,18 @@ const Search = ({siteChange, functionChange, timerChange, textChange}) => {
             options={functionOptions}
           />
         </Form.Field>
+        {functions === 'view' && 
+          <Form.Field>
+            <Dropdown
+              onChange={(e, data) =>  setView(data.value)}
+              placeholder='View As...'
+              search
+              selection
+              fluid
+              options={viewOptions}
+            />
+          </Form.Field>
+        }
         {functions === 'refresh' && 
           <Form.Field>
             <Input
