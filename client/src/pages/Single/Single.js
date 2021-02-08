@@ -31,6 +31,9 @@ const Single = () => {
       else if(functions === 'find'){
         viewFunction();
       }
+      else if(functions === 'refreshfind'){
+        viewFunction();
+      }
     },
     [site, functions, timer],
   );

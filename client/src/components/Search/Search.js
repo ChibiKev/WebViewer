@@ -14,6 +14,7 @@ const Search = ({siteChange, viewChange, functionChange, timerChange, textChange
     { key: 'view', value: 'view', text: 'View' },
     { key: 'refresh', value: 'refresh', text: 'Refresh' },
     { key: 'find', value: 'find', text: 'Find' },
+    { key: 'refreshfind', value: 'refreshfind', text: 'Refresh + Find' },
   ]
 
   const viewOptions = [
@@ -41,6 +42,10 @@ const Search = ({siteChange, viewChange, functionChange, timerChange, textChange
     }
     if (functions === 'find' && !text) {
       alert('Please Select A Valid Text To Find');
+      return;
+    }
+    if (functions === 'refreshfind' && !timer && !text) {
+      alert('Please Select A Valid Timer And A Valid Text To Find');
       return;
     }
     siteChange("http://" + site);
@@ -109,6 +114,32 @@ const Search = ({siteChange, viewChange, functionChange, timerChange, textChange
               onChange={(e) => setText(e.target.value)}
             />
           </Form.Field>
+        }
+        {functions === 'refreshfind' && 
+          <>
+            <Form.Field>
+              <Input
+                placeholder='Amount in Seconds'
+                value={timer}
+                type="number"
+                min="1"
+                step="1"
+                fluid
+                labelPosition='right'
+                label='Seconds'
+                onChange={(e) => setTimer(e.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Input
+                placeholder='Find This Text'
+                value={text}
+                type="text"
+                fluid
+                onChange={(e) => setText(e.target.value)}
+              />
+            </Form.Field>
+          </>
         }
         <Button type='submit' onClick={onSubmit}>Submit</Button>
       </Form>
