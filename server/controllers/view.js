@@ -1,9 +1,8 @@
 const puppeteer = require('puppeteer');
 const express = require('express');
+const router = express.Router();
 
-const app = express();
-
-app.get('/view', async (req, res) => {
+router.get('/', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(req.query.url); // URL is given by the "user" (your client-side application)
@@ -19,4 +18,4 @@ app.get('/view', async (req, res) => {
   await browser.close();
 })
 
-app.listen(8080);
+module.exports = router;
