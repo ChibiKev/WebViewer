@@ -13,8 +13,8 @@ const Single = () => {
 
   useEffect(
     () => {
-      const viewFunction = () => {
-        return fetch(`/view?url=${site}`)
+      const viewImageFunction = () => {
+        return fetch(`/view/image?url=${site}`)
         .then(response => {
           setWebView('')
           console.log(response)
@@ -22,20 +22,32 @@ const Single = () => {
         })
         .catch(error => {console.log(error)})
       }
-      if(functions === 'view'){
-        viewFunction();
+      const viewPDFFunction = () => {
+        return fetch(`/view/pdf?url=${site}`)
+        .then(response => {
+          setWebView('')
+          console.log(response)
+          setWebView(response.url)
+        })
+        .catch(error => {console.log(error)})
+      }
+      if(functions === 'view' && view === 'image'){
+        viewImageFunction();
+      }
+      else if(functions === 'view' && view === 'PDF'){
+        viewPDFFunction();
       }
       else if(functions === 'refresh'){
-        window.setInterval(viewFunction, timer*1000);
+        window.setInterval(viewImageFunction, timer*1000);
       }
       else if(functions === 'find'){
-        viewFunction();
+        viewImageFunction();
       }
       else if(functions === 'refreshfind'){
-        viewFunction();
+        viewImageFunction();
       }
     },
-    [site, functions, timer],
+    [site, functions, view, timer],
   );
 
   return (
