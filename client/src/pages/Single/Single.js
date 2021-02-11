@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container } from 'semantic-ui-react'
 import Search from '../../components/Search/Search';
 import ImageViewer from '../../components/ImageViewer/ImageViewer';
+import PDFViewer from '../../components/PDFViewer/PDFViewer';
 
 const Single = () => {
   const [site, setSite] = useState('');
@@ -15,19 +16,17 @@ const Single = () => {
     () => {
       const viewImageFunction = () => {
         return fetch(`/view/image?url=${site}`)
-        .then(response => {
-          setWebView('')
-          console.log(response)
-          setWebView(response.url)
+        .then(response => response.blob())
+        .then(blob => {
+          setWebView(URL.createObjectURL(blob))
         })
         .catch(error => {console.log(error)})
       }
       const viewPDFFunction = () => {
         return fetch(`/view/pdf?url=${site}`)
-        .then(response => {
-          setWebView('')
-          console.log(response)
-          setWebView(response.url)
+        .then(response => response.blob())
+        .then(blob => {
+          setWebView(URL.createObjectURL(blob))
         })
         .catch(error => {console.log(error)})
       }
@@ -47,7 +46,7 @@ const Single = () => {
         viewImageFunction();
       }
     },
-    [site, functions, view, timer],
+    [site, functions, view, timer, text],
   );
 
   return (
@@ -57,8 +56,14 @@ const Single = () => {
         viewChange={(viewChange) => setView(viewChange)}
         functionChange={(functionChange) => setFunctions(functionChange)}
         timerChange={(timerChange) => setTimer(timerChange)}
-        textChange={(textChange) => setText(textChange)} />
-      <ImageViewer WebView={webView} Site={site} />
+        textChange={(textChange) => setText(textChange)}
+      />
+      {(view === 'image' || functions !== 'view') && 
+        <ImageViewer WebView={webView} Site={site} />
+      }
+      {(view === 'PDF' || functions === 'view') && 
+        <PDFViewer WebView={webView} Site={site} />
+      }
     </Container>
   );
 }

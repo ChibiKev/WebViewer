@@ -24,7 +24,7 @@ router.get('/pdf', async (req, res) => {
   await page.goto(req.query.url); // URL is given by the "user" (your client-side application)
   const pdfBuffer = await page.pdf();
 
-  // Respond with the image
+  // Respond with the pdf
   res.writeHead(200, {
     'Content-Type': 'application/pdf',
     'Content-Length': pdfBuffer.length
