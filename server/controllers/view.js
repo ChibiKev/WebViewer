@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/image', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(req.query.url); // URL is given by the "user" (your client-side application)
+  await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
   const screenshotBuffer = await page.screenshot();
 
   // Respond with the image
@@ -21,7 +21,7 @@ router.get('/image', async (req, res) => {
 router.get('/pdf', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(req.query.url); // URL is given by the "user" (your client-side application)
+  await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
   const pdfBuffer = await page.pdf();
 
   // Respond with the pdf

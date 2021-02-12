@@ -18,7 +18,8 @@ const Single = () => {
         return fetch(`/view/image?url=${site}`)
         .then(response => response.blob())
         .then(blob => {
-          setWebView(URL.createObjectURL(blob))
+          setWebView('');
+          setWebView(URL.createObjectURL(blob));
         })
         .catch(error => {console.log(error)})
       }
@@ -26,7 +27,8 @@ const Single = () => {
         return fetch(`/view/pdf?url=${site}`)
         .then(response => response.blob())
         .then(blob => {
-          setWebView(URL.createObjectURL(blob))
+          setWebView('');
+          setWebView(URL.createObjectURL(blob));
         })
         .catch(error => {console.log(error)})
       }
@@ -36,14 +38,23 @@ const Single = () => {
       else if(functions === 'view' && view === 'PDF'){
         viewPDFFunction();
       }
-      else if(functions === 'refresh'){
-        window.setInterval(viewImageFunction, timer*1000);
+      else if(functions === 'refresh' && view === 'image'){
+        setInterval(viewImageFunction, timer*1000);
       }
-      else if(functions === 'find'){
+      else if(functions === 'refresh' && view === 'PDF'){
+        setInterval(viewPDFFunction, timer*1000);
+      }
+      else if(functions === 'find' && view === 'image'){
         viewImageFunction();
       }
-      else if(functions === 'refreshfind'){
+      else if(functions === 'find' && view === 'PDF'){
+        viewPDFFunction();
+      }
+      else if(functions === 'refreshfind' && view === 'image'){
         viewImageFunction();
+      }
+      else if(functions === 'refreshfind' && view === 'PDF'){
+        viewPDFFunction();
       }
     },
     [site, functions, view, timer, text],
@@ -61,7 +72,7 @@ const Single = () => {
       {(view === 'image' || functions !== 'view') && 
         <ImageViewer WebView={webView} Site={site} />
       }
-      {(view === 'PDF' || functions === 'view') && 
+      {(view === 'PDF' && functions === 'view') && 
         <PDFViewer WebView={webView} Site={site} />
       }
     </Container>

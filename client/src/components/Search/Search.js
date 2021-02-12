@@ -32,8 +32,8 @@ const Search = ({siteChange, viewChange, functionChange, timerChange, textChange
       alert('Please Select A Function');
       return;
     }
-    if (functions === 'view' && !view) {
-      alert('Please Select A View');
+    if (!view) {
+      alert('Please Select A File To View The Site');
       return;
     }
     if (functions === 'refresh' && !timer) {
@@ -48,7 +48,11 @@ const Search = ({siteChange, viewChange, functionChange, timerChange, textChange
       alert('Please Select A Valid Timer And A Valid Text To Find');
       return;
     }
-    siteChange("http://" + site);
+    var updatedSite = site;
+    if (!/^https?:\/\//i.test(site)) {
+      updatedSite = 'http://' + site;
+    }
+    siteChange(updatedSite);
     viewChange(view);
     functionChange(functions);
     timerChange(timer);
@@ -60,11 +64,19 @@ const Search = ({siteChange, viewChange, functionChange, timerChange, textChange
       <Form onSubmit={onSubmit}>
         <Form.Field>
           <Input
-            label='http://'
-            placeholder='example.com'
+            placeholder='Insert Link'
             value={site}
             fluid
             onChange={(e) => setSite(e.target.value)}
+            action={
+              <Dropdown
+                onChange={(e, data) =>  setView(data.value)}
+                placeholder='View As...'
+                search
+                selection
+                options={viewOptions}
+              />            
+            }
           />
         </Form.Field>
         <Form.Field>
@@ -77,18 +89,6 @@ const Search = ({siteChange, viewChange, functionChange, timerChange, textChange
             options={functionOptions}
           />
         </Form.Field>
-        {functions === 'view' && 
-          <Form.Field>
-            <Dropdown
-              onChange={(e, data) =>  setView(data.value)}
-              placeholder='View As...'
-              search
-              selection
-              fluid
-              options={viewOptions}
-            />
-          </Form.Field>
-        }
         {functions === 'refresh' && 
           <Form.Field>
             <Input
