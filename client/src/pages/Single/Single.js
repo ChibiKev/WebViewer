@@ -3,6 +3,7 @@ import { Container } from 'semantic-ui-react'
 import Search from '../../components/Search/Search';
 import ImageViewer from '../../components/ImageViewer/ImageViewer';
 import PDFViewer from '../../components/PDFViewer/PDFViewer';
+import HTMLViewer from '../../components/HTMLViewer/HTMLViewer';
 
 const Single = () => {
   const [site, setSite] = useState('');
@@ -14,8 +15,8 @@ const Single = () => {
 
   useEffect(
     () => {
-      const viewImageFunction = () => {
-        return fetch(`/view/image?url=${site}`)
+      const viewImageFunction = async () => {
+        await fetch(`/view/image?url=${site}`)
         .then(response => response.blob())
         .then(blob => {
           setWebView('');
@@ -23,8 +24,17 @@ const Single = () => {
         })
         .catch(error => {console.log(error)})
       }
-      const viewPDFFunction = () => {
-        return fetch(`/view/pdf?url=${site}`)
+      const viewPDFFunction = async () => {
+        await fetch(`/view/pdf?url=${site}`)
+        .then(response => response.blob())
+        .then(blob => {
+          setWebView('');
+          setWebView(URL.createObjectURL(blob));
+        })
+        .catch(error => {console.log(error)})
+      }
+      const viewHTMLFunction = async () => {
+        await fetch(`/view/html?url=${site}`)
         .then(response => response.blob())
         .then(blob => {
           setWebView('');
@@ -37,6 +47,9 @@ const Single = () => {
       }
       else if(functions === 'view' && view === 'PDF'){
         viewPDFFunction();
+      }
+      else if(functions === 'view' && view === 'HTML'){
+        viewHTMLFunction();
       }
       else if(functions === 'refresh' && view === 'image'){
         setInterval(viewImageFunction, timer*1000);
@@ -69,11 +82,14 @@ const Single = () => {
         timerChange={(timerChange) => setTimer(timerChange)}
         textChange={(textChange) => setText(textChange)}
       />
-      {(view === 'image' || functions !== 'view') && 
+      {view === 'image' && 
         <ImageViewer WebView={webView} Site={site} />
       }
-      {(view === 'PDF' && functions === 'view') && 
+      {view === 'PDF' && 
         <PDFViewer WebView={webView} Site={site} />
+      }
+      {view === 'HTML' && 
+        <HTMLViewer WebView={webView} Site={site} />
       }
     </Container>
   );

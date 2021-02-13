@@ -1,12 +1,12 @@
 import { Grid, Label } from 'semantic-ui-react';
 
-const PDFViewer = ({WebView, Site}) => {
+const HTMLViewer = ({WebView, Site}) => {
   return (
     <Grid>
       <Grid.Column textAlign="center">
         <embed
           src={WebView}
-          type="application/pdf"
+          type="text/html"
           style={{width:"100%",height:"70vh"}}
         />
         {Site && 
@@ -19,4 +19,4 @@ const PDFViewer = ({WebView, Site}) => {
   );
 }
 
-export default PDFViewer;
+export default HTMLViewer;

@@ -34,4 +34,19 @@ router.get('/pdf', async (req, res) => {
   await browser.close();
 })
 
+router.get('/html', async (req, res) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
+  const htmlContent = await page.content();
+  
+  // Respond with the html
+  res.writeHead(200, {
+    'Content-Type': 'text/html',
+  });
+  res.end(htmlContent);
+
+  await browser.close();
+})
+
 module.exports = router;

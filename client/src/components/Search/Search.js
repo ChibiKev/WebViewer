@@ -20,6 +20,7 @@ const Search = ({siteChange, viewChange, functionChange, timerChange, textChange
   const viewOptions = [
     { key: 'image', value: 'image', text: 'Image' },
     { key: 'PDF', value: 'PDF', text: 'PDF' },
+    { key: 'HTML', value: 'HTML', text: 'HTML' },
   ]
 
   const onSubmit = (e) => {
