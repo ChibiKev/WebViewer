@@ -7,6 +7,7 @@ import HTMLViewer from '../../components/HTMLViewer/HTMLViewer';
 
 const Single = () => {
   const [site, setSite] = useState('');
+  const [device, setDevice] = useState('');
   const [functions, setFunctions] = useState('');
   const [view, setView] = useState('');
   const [timer, setTimer] = useState('');
@@ -70,7 +71,7 @@ const Single = () => {
         viewPDFFunction();
       }
     },
-    [site, functions, view, timer, text],
+    [site, device, functions, view, timer, text],
   );
 
   return (
@@ -79,6 +80,7 @@ const Single = () => {
         siteChange={(siteChange) => setSite(siteChange)}
         viewChange={(viewChange) => setView(viewChange)}
         functionChange={(functionChange) => setFunctions(functionChange)}
+        deviceChange={(deviceChange) => setDevice(deviceChange)}
         timerChange={(timerChange) => setTimer(timerChange)}
         textChange={(textChange) => setText(textChange)}
       />

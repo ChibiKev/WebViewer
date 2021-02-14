@@ -6,7 +6,7 @@ router.get('/image', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
-  const screenshotBuffer = await page.screenshot();
+  const screenshotBuffer = await page.screenshot({fullPage: true});
 
   // Respond with the image
   res.writeHead(200, {
@@ -22,7 +22,7 @@ router.get('/pdf', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
-  const pdfBuffer = await page.pdf();
+  const pdfBuffer = await page.pdf({format: 'letter'});
 
   // Respond with the pdf
   res.writeHead(200, {
