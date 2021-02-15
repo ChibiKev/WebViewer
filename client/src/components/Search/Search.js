@@ -110,16 +110,16 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
       alert('Please Add A Site');
       return;
     }
+    if (!view) {
+      alert('Please Select A File To View The Site');
+      return;
+    }
     if (!device) {
       alert('Please Select A Device');
       return;
     }
     if (!functions) {
       alert('Please Select A Function');
-      return;
-    }
-    if (!view) {
-      alert('Please Select A File To View The Site');
       return;
     }
     if (functions === 'refresh' && !timer) {
@@ -140,6 +140,7 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
     }
     siteChange(updatedSite);
     viewChange(view);
+    deviceChange(device);
     functionChange(functions);
     timerChange(timer);
     textChange(text);

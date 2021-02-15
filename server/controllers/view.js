@@ -5,6 +5,8 @@ const router = express.Router();
 router.get('/image', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  const device = puppeteer.devices[req.query.device];
+  await page.emulate(device);
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
   const screenshotBuffer = await page.screenshot({fullPage: true});
 
@@ -21,6 +23,8 @@ router.get('/image', async (req, res) => {
 router.get('/pdf', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  const device = puppeteer.devices[req.query.device];
+  await page.emulate(device);
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
   const pdfBuffer = await page.pdf({format: 'letter'});
 
@@ -37,6 +41,8 @@ router.get('/pdf', async (req, res) => {
 router.get('/html', async (req, res) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  const device = puppeteer.devices[req.query.device];
+  await page.emulate(device);
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
   const htmlContent = await page.content();
   

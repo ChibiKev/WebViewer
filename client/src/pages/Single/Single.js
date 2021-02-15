@@ -17,7 +17,7 @@ const Single = () => {
   useEffect(
     () => {
       const viewImageFunction = async () => {
-        await fetch(`/view/image?url=${site}`)
+        await fetch(`/view/image?url=${site}&device=${device}`)
         .then(response => response.blob())
         .then(blob => {
           setWebView('');
@@ -26,7 +26,7 @@ const Single = () => {
         .catch(error => {console.log(error)})
       }
       const viewPDFFunction = async () => {
-        await fetch(`/view/pdf?url=${site}`)
+        await fetch(`/view/pdf?url=${site}&device=${device}`)
         .then(response => response.blob())
         .then(blob => {
           setWebView('');
@@ -35,7 +35,7 @@ const Single = () => {
         .catch(error => {console.log(error)})
       }
       const viewHTMLFunction = async () => {
-        await fetch(`/view/html?url=${site}`)
+        await fetch(`/view/html?url=${site}&device=${device}`)
         .then(response => response.blob())
         .then(blob => {
           setWebView('');
@@ -79,8 +79,8 @@ const Single = () => {
       <Search
         siteChange={(siteChange) => setSite(siteChange)}
         viewChange={(viewChange) => setView(viewChange)}
-        functionChange={(functionChange) => setFunctions(functionChange)}
         deviceChange={(deviceChange) => setDevice(deviceChange)}
+        functionChange={(functionChange) => setFunctions(functionChange)}
         timerChange={(timerChange) => setTimer(timerChange)}
         textChange={(textChange) => setText(textChange)}
       />
