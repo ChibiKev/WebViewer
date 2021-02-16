@@ -4,7 +4,7 @@
   "description": "A WebViewer",
   "main": "index.js",
   "scripts": {
-    "start": "cd server && npm install %% npm start",
+    "start": "cd server && node app.js",
     "build": "cd client && npm install && npm run build"
   },
   "repository": {
