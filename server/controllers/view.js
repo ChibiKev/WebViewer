@@ -3,7 +3,12 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/image', async (req, res) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    'args' : [
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ]
+  });
   const page = await browser.newPage();
   const device = puppeteer.devices[req.query.device];
   await page.emulate(device);
@@ -21,7 +26,12 @@ router.get('/image', async (req, res) => {
 })
 
 router.get('/pdf', async (req, res) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    'args' : [
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ]
+  });
   const page = await browser.newPage();
   const device = puppeteer.devices[req.query.device];
   await page.emulate(device);
@@ -39,7 +49,12 @@ router.get('/pdf', async (req, res) => {
 })
 
 router.get('/html', async (req, res) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    'args' : [
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ]
+  });
   const page = await browser.newPage();
   const device = puppeteer.devices[req.query.device];
   await page.emulate(device);
