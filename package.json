@@ -1,0 +1,20 @@
+{
+  "name": "webviewer",
+  "version": "1.0.0",
+  "description": "A WebViewer",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd server && npm install %% npm start",
+    "build": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChibiKev/WebViewer.git"
+  },
+  "author": "ChibiKev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChibiKev/WebViewer/issues"
+  },
+  "homepage": "https://github.com/ChibiKev/WebViewer#readme"
+}
