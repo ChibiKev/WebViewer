@@ -1,14 +1,44 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Segment } from 'semantic-ui-react';
+import logo from '../../public/logo.png';
 
-const Navbar = () => {  
+const Navbar = () => {
+  const [activeItem, setActiveItem] = useState('');
+
+  const handleItemClick = (e, { name }) => {
+    setActiveItem(name);
+  } 
+
   return (
-    <Menu inverted size='large' style={{borderRadius: 0, marginBottom: '5px'}}>
-      <Menu.Item header as={Link} to={'/'}>Viewer</Menu.Item>
-      <Menu.Item as={Link} to={'/'}>Home</Menu.Item>
-      <Menu.Item as={Link} to={'/Single'}>Single Page</Menu.Item>
-      <Menu.Item as={Link} to={'/Functions'}>Functions</Menu.Item>
-    </Menu>
+    <Segment inverted style={{borderRadius: 0}}>
+      <Menu stackable inverted secondary>
+        <Menu.Item as={Link} to={'/'} name='Home' onClick={handleItemClick}>
+          <img src={logo} alt='' />
+        </Menu.Item>
+        <Menu.Item
+          as={Link} 
+          to={'/'}
+          name='Home'
+          active={activeItem === 'Home'}
+          onClick={handleItemClick}
+        />
+        <Menu.Item
+          as={Link}
+          to={'/Single'}
+          name='Single Page'
+          active={activeItem === 'Single Page'}
+          onClick={handleItemClick}
+        />
+        <Menu.Item
+          as={Link}
+          to={'/Functions'}
+          name='Functions'
+          active={activeItem === 'Functions'}
+          onClick={handleItemClick}
+        />
+      </Menu>
+    </Segment>
   );
 }
 
