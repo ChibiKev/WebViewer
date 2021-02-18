@@ -57,7 +57,7 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
     { key: 'iPhone 11 Pro', value: 'iPhone 11 Pro', text: 'iPhone 11 Pro (375 x 812)' },
     { key: 'iPhone 11 Pro landscape', value: 'iPhone 11 Pro landscape', text: 'iPhone 11 Pro landscape (812 x 375)' },
     { key: 'iPhone 11 Pro Max', value: 'iPhone 11 Pro Max', text: 'iPhone 11 Pro Max (414 x 896)' },
-    { key: 'iPhone 11 Pro Max', value: 'iPhone 11 Pro Max', text: 'iPhone 11 Pro Max (896 x 414)' },
+    { key: 'iPhone 11 Pro Max landscape', value: 'iPhone 11 Pro Max landscape', text: 'iPhone 11 Pro Max landscape (896 x 414)' },
     { key: 'JioPhone 2', value: 'JioPhone 2', text: 'JioPhone 2 (240 x 320)' },
     { key: 'JioPhone 2 landscape', value: 'JioPhone 2 landscape', text: 'JioPhone 2 landscape (320 x 240)' },
     { key: 'Kindle Fire HDX', value: 'Kindle Fire HDX', text: 'Kindle Fire HDX (800 x 1280)' },
@@ -93,9 +93,9 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
 
   const functionOptions = [
     { key: 'view', value: 'view', text: 'View' },
-    { key: 'refresh', value: 'refresh', text: 'Refresh' },
+    { key: 'refresh', value: 'refresh', text: 'Refresh', disabled: true },
     { key: 'find', value: 'find', text: 'Find' },
-    { key: 'refreshfind', value: 'refreshfind', text: 'Refresh + Find' },
+    { key: 'refreshfind', value: 'refreshfind', text: 'Refresh + Find', disabled: true },
   ]
 
   const viewOptions = [

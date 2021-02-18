@@ -43,32 +43,49 @@ const Single = () => {
         })
         .catch(error => {console.log(error)})
       }
-      if(functions === 'view' && view === 'image'){
-        viewImageFunction();
+      if(functions === 'view'){
+        if(view === 'image'){
+          viewImageFunction();
+        }
+        else if(view === 'PDF'){
+          viewPDFFunction();
+        }
+        else if(view === 'HTML'){
+          viewHTMLFunction();
+        }
       }
-      else if(functions === 'view' && view === 'PDF'){
-        viewPDFFunction();
+      else if(functions === 'refresh'){
+        if(view === 'image'){
+          setInterval(viewImageFunction, timer*1000);
+        }
+        else if(view === 'PDF'){
+          setInterval(viewPDFFunction, timer*1000);
+        }
+        else if(view === 'HTML'){
+          setInterval(viewHTMLFunction, timer*1000);
+        }
       }
-      else if(functions === 'view' && view === 'HTML'){
-        viewHTMLFunction();
+      else if(functions === 'find'){
+        if(view === 'image'){
+          viewImageFunction();
+        }
+        else if(view === 'PDF'){
+          viewPDFFunction();
+        }
+        else if(view === 'HTML'){
+          viewHTMLFunction();
+        }
       }
-      else if(functions === 'refresh' && view === 'image'){
-        setInterval(viewImageFunction, timer*1000);
-      }
-      else if(functions === 'refresh' && view === 'PDF'){
-        setInterval(viewPDFFunction, timer*1000);
-      }
-      else if(functions === 'find' && view === 'image'){
-        viewImageFunction();
-      }
-      else if(functions === 'find' && view === 'PDF'){
-        viewPDFFunction();
-      }
-      else if(functions === 'refreshfind' && view === 'image'){
-        viewImageFunction();
-      }
-      else if(functions === 'refreshfind' && view === 'PDF'){
-        viewPDFFunction();
+      else if(functions === 'refreshfind'){
+        if(view === 'image'){
+          viewImageFunction();
+        }
+        else if(view === 'PDF'){
+          viewPDFFunction();
+        }
+        else if(view === 'HTML'){
+          viewHTMLFunction();
+        }
       }
     },
     [site, device, functions, view, timer, text],
