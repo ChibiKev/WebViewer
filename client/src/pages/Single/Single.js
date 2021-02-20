@@ -43,6 +43,33 @@ const Single = () => {
         })
         .catch(error => {console.log(error)})
       }
+      const findImageFunction = async () => {
+        await fetch(`/find/image?url=${site}&device=${device}&text=${text}`)
+        .then(response => response.blob())
+        .then(blob => {
+          setWebView('');
+          setWebView(URL.createObjectURL(blob));
+        })
+        .catch(error => {console.log(error)})
+      }
+      const findPDFFunction = async () => {
+        await fetch(`/find/pdf?url=${site}&device=${device}&text=${text}`)
+        .then(response => response.blob())
+        .then(blob => {
+          setWebView('');
+          setWebView(URL.createObjectURL(blob));
+        })
+        .catch(error => {console.log(error)})
+      }
+      const findHTMLFunction = async () => {
+        await fetch(`/find/html?url=${site}&device=${device}&text=${text}`)
+        .then(response => response.blob())
+        .then(blob => {
+          setWebView('');
+          setWebView(URL.createObjectURL(blob));
+        })
+        .catch(error => {console.log(error)})
+      }
       if(functions === 'view'){
         if(view === 'image'){
           viewImageFunction();
@@ -67,13 +94,13 @@ const Single = () => {
       }
       else if(functions === 'find'){
         if(view === 'image'){
-          viewImageFunction();
+          findImageFunction();
         }
         else if(view === 'PDF'){
-          viewPDFFunction();
+          findPDFFunction();
         }
         else if(view === 'HTML'){
-          viewHTMLFunction();
+          findHTMLFunction();
         }
       }
       else if(functions === 'refreshfind'){
