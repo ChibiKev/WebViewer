@@ -12,6 +12,7 @@ const Single = () => {
   const [view, setView] = useState('');
   const [timer, setTimer] = useState('');
   const [text, setText] = useState('');
+  const [textCases, setTextCases] = useState('');
   const [webView, setWebView] = useState('');
 
   useEffect(
@@ -127,6 +128,7 @@ const Single = () => {
         functionChange={(functionChange) => setFunctions(functionChange)}
         timerChange={(timerChange) => setTimer(timerChange)}
         textChange={(textChange) => setText(textChange)}
+        textCasesChange={(textCasesChange) => setTextCases(textCasesChange)}
       />
       {view === 'image' && 
         <ImageViewer WebView={webView} Site={site} />

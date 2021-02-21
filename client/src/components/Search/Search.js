@@ -3,13 +3,14 @@ import { Form, Input, Dropdown, Button } from 'semantic-ui-react';
 
 import './Search.css';
 
-const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChange, textChange}) => {
+const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChange, textChange, textCasesChange}) => {
   const [site, setSite] = useState('');
   const [device, setDevice] = useState('');
   const [functions, setFunctions] = useState('');
   const [view, setView] = useState('');
   const [timer, setTimer] = useState('');
   const [text, setText] = useState('');
+  const [textCases, setTextCases] = useState('');
 
   const deviceOptions = [
     { key: 'Blackberry PlayBook', value: 'Blackberry PlayBook', text: 'Blackberry PlayBook (600 x 1024)' },
@@ -104,6 +105,11 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
     { key: 'HTML', value: 'HTML', text: 'HTML' },
   ]
 
+  const textOptions = [
+    { key: 'g', value: 'g', text: 'Case Sensitive' },
+    { key: 'gi', value: 'gi', text: 'Case Insensitive' },
+  ]
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (!site) {
@@ -144,6 +150,7 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
     functionChange(functions);
     timerChange(timer);
     textChange(text);
+    textCasesChange(textCases);
   }
 
   return (
@@ -162,7 +169,7 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
                 search
                 selection
                 options={viewOptions}
-              />            
+              />
             }
           />
         </Form.Field>
@@ -209,6 +216,15 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
               type="text"
               fluid
               onChange={(e) => setText(e.target.value)}
+              action={
+                <Dropdown
+                  onChange={(e, data) =>  setTextCases(data.value)}
+                  placeholder='Settings'
+                  search
+                  selection
+                  options={textOptions}
+                />
+              }
             />
           </Form.Field>
         }
