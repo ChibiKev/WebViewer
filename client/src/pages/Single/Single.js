@@ -45,7 +45,7 @@ const Single = () => {
         .catch(error => {console.log(error)})
       }
       const findImageFunction = async () => {
-        await fetch(`/find/image?url=${site}&device=${device}&text=${text}`)
+        await fetch(`/find/image?url=${site}&device=${device}&text[text]=${text}&text[cases]=${textCases}`)
         .then(response => response.blob())
         .then(blob => {
           setWebView('');
@@ -54,7 +54,7 @@ const Single = () => {
         .catch(error => {console.log(error)})
       }
       const findPDFFunction = async () => {
-        await fetch(`/find/pdf?url=${site}&device=${device}&text=${text}`)
+        await fetch(`/find/pdf?url=${site}&device=${device}&text[text]=${text}&text[cases]=${textCases}`)
         .then(response => response.blob())
         .then(blob => {
           setWebView('');
@@ -63,7 +63,7 @@ const Single = () => {
         .catch(error => {console.log(error)})
       }
       const findHTMLFunction = async () => {
-        await fetch(`/find/html?url=${site}&device=${device}&text=${text}`)
+        await fetch(`/find/html?url=${site}&device=${device}&text[text]=${text}&text[cases]=${textCases}`)
         .then(response => response.blob())
         .then(blob => {
           setWebView('');
@@ -116,7 +116,7 @@ const Single = () => {
         }
       }
     },
-    [site, device, functions, view, timer, text],
+    [site, device, functions, view, timer, text, textCases],
   );
 
   return (

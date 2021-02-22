@@ -13,11 +13,11 @@ router.get('/image', async (req, res) => {
   const device = puppeteer.devices[req.query.device];
   await page.emulate(device);
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
-  const text = req.query.text;
-  const found = await page.evaluate((text) => window.find(text), text); // Find Text
-  const regex = new RegExp(text, "g");
+  const text = req.query.text.text;
+  const textCases = req.query.text.cases;
+  const found = await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
+  const regex = new RegExp(text, textCases);
   const amountFound = (await page.content()).match(regex);
-  console.log(found);
   const screenshotBuffer = await page.screenshot({fullPage: true});
 
   // Respond with the image
@@ -41,11 +41,11 @@ router.get('/pdf', async (req, res) => {
   const device = puppeteer.devices[req.query.device];
   await page.emulate(device);
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
-  const text = req.query.text;
-  const found = await page.evaluate((text) => window.find(text), text); // Find Text
-  const regex = new RegExp(text, "g");
+  const text = req.query.text.text;
+  const textCases = req.query.text.cases;
+  const found = await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
+  const regex = new RegExp(text, textCases);
   const amountFound = (await page.content()).match(regex);
-  console.log(found);
   const pdfBuffer = await page.pdf({format: 'letter'});
 
   // Respond with the pdf
@@ -69,11 +69,11 @@ router.get('/html', async (req, res) => {
   const device = puppeteer.devices[req.query.device];
   await page.emulate(device);
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
-  const text = req.query.text;
-  const found = await page.evaluate((text) => window.find(text), text); // Find Text
-  const regex = new RegExp(text, "g");
+  const text = req.query.text.text;
+  const textCases = req.query.text.cases;
+  const found = await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
+  const regex = new RegExp(text, textCases);
   const amountFound = (await page.content()).match(regex);
-  console.log(found);
   const htmlContent = await page.content();
   
   // Respond with the html
