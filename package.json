@@ -12,7 +12,7 @@
     "url": "git+https://github.com/ChibiKev/WebViewer.git"
   },
   "author": "ChibiKev",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ChibiKev/WebViewer/issues"
   },
