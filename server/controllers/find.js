@@ -2,6 +2,30 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 const router = express.Router();
 
+router.get('/text', async (req, res) => {
+  const browser = await puppeteer.launch({
+    'args' : [
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ]
+  });
+  const page = await browser.newPage();
+  await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
+  const text = req.query.text.text;
+  const textCases = req.query.text.cases;
+  const found = await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
+  const regex = new RegExp(text, textCases);
+  const pageText = await page.$eval('*', el => el.innerText);
+  const amountFound = pageText.match(regex);
+  // Respond with the result
+  res.status(200).send({
+    found: found,
+    amountFound: amountFound
+  })
+
+  await browser.close();
+})
+
 router.get('/image', async (req, res) => {
   const browser = await puppeteer.launch({
     'args' : [
@@ -15,9 +39,7 @@ router.get('/image', async (req, res) => {
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
   const text = req.query.text.text;
   const textCases = req.query.text.cases;
-  const found = await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
-  const regex = new RegExp(text, textCases);
-  const amountFound = (await page.content()).match(regex);
+  await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
   const screenshotBuffer = await page.screenshot({fullPage: true});
 
   // Respond with the image
@@ -43,9 +65,7 @@ router.get('/pdf', async (req, res) => {
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
   const text = req.query.text.text;
   const textCases = req.query.text.cases;
-  const found = await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
-  const regex = new RegExp(text, textCases);
-  const amountFound = (await page.content()).match(regex);
+  await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
   const pdfBuffer = await page.pdf({format: 'letter'});
 
   // Respond with the pdf
@@ -71,9 +91,7 @@ router.get('/html', async (req, res) => {
   await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
   const text = req.query.text.text;
   const textCases = req.query.text.cases;
-  const found = await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
-  const regex = new RegExp(text, textCases);
-  const amountFound = (await page.content()).match(regex);
+  await page.evaluate((text, textCases) => window.find(text, textCases === 'g' ? true : false), text, textCases); // Find Text
   const htmlContent = await page.content();
   
   // Respond with the html
