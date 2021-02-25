@@ -14,6 +14,7 @@ const Single = () => {
   const [text, setText] = useState('');
   const [textCases, setTextCases] = useState('');
   const [webView, setWebView] = useState('');
+  const [found, setFound] = useState('');
 
   useEffect(
     () => {
@@ -94,6 +95,11 @@ const Single = () => {
         }
       }
       else if(functions === 'find'){
+        fetch(`/find/text?url=${site}&text[text]=${text}&text[cases]=${textCases}`)
+        .then(response => response.json())
+        .then(response => setFound(response))
+        .catch(error => {console.log(error)})
+
         if(view === 'image'){
           findImageFunction();
         }
