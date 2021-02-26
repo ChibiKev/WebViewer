@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container } from 'semantic-ui-react'
 import Search from '../../components/Search/Search';
+import FoundResult from '../../components/FoundResult/FoundResult';
 import ImageViewer from '../../components/ImageViewer/ImageViewer';
 import PDFViewer from '../../components/PDFViewer/PDFViewer';
 import HTMLViewer from '../../components/HTMLViewer/HTMLViewer';
@@ -136,6 +137,9 @@ const Single = () => {
         textChange={(textChange) => setText(textChange)}
         textCasesChange={(textCasesChange) => setTextCases(textCasesChange)}
       />
+      {functions === 'find' && 
+        <FoundResult Site={site} Text={text} Found={found} />
+      }
       {view === 'image' && 
         <ImageViewer WebView={webView} Site={site} />
       }
