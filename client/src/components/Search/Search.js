@@ -132,11 +132,11 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
       alert('Please Select A Valid Timer');
       return;
     }
-    if (functions === 'find' && !text) {
+    if (functions === 'find' && (!text || !textCases)) {
       alert('Please Select A Valid Text To Find');
       return;
     }
-    if (functions === 'refreshfind' && !timer && !text) {
+    if (functions === 'refreshfind' && (!timer || !text || !textCases)) {
       alert('Please Select A Valid Timer And A Valid Text To Find');
       return;
     }

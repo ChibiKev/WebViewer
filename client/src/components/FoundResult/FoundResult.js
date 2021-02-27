@@ -1,10 +1,18 @@
+import { Message } from 'semantic-ui-react';
+
 const FoundResult = ({Site, Text, Found}) => {
   return (
     <>
       {Found.found ? 
-      `${Text} was found ${Found.amountFound.length} times on ${Site}.`
+        <Message positive>
+          <Message.Header>Found!</Message.Header>
+          {`${Text} was found ${Found.amountFound.length} times on ${Site}.`}
+        </Message>
       :
-      `${Text} was not found on ${Site}.`
+        <Message negative>
+          <Message.Header>Not Found!</Message.Header>
+          {`${Text} was not found on ${Site}.`}
+        </Message>
       }
     </>
   );
