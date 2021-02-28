@@ -1,16 +1,23 @@
 import { useState } from 'react';
-import { Form, Input, Dropdown, Button } from 'semantic-ui-react';
+import { Form, Input, Dropdown, Message, Button } from 'semantic-ui-react';
 
 import './Search.css';
 
 const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChange, textChange, textCasesChange}) => {
   const [site, setSite] = useState('');
+  const [view, setView] = useState('');
   const [device, setDevice] = useState('');
   const [functions, setFunctions] = useState('');
-  const [view, setView] = useState('');
   const [timer, setTimer] = useState('');
   const [text, setText] = useState('');
   const [textCases, setTextCases] = useState('');
+
+  const [formError, setFormError] = useState(false);
+  const [siteError, setSiteError] = useState(false);
+  const [deviceError, setDeviceError] = useState(false);
+  const [functionError, setFunctionError] = useState(false);
+  const [timerError, setTimerError] = useState(false);
+  const [textError, setTextError] = useState(false);
 
   const deviceOptions = [
     { key: 'Blackberry PlayBook', value: 'Blackberry PlayBook', text: 'Blackberry PlayBook (600 x 1024)' },
@@ -112,33 +119,48 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!site) {
-      alert('Please Add A Site');
-      return;
+    var Error = false;
+    if (!site || !view) {
+      setSiteError(true);
+      Error = true;
     }
-    if (!view) {
-      alert('Please Select A File To View The Site');
-      return;
+    else{
+      setSiteError(false);
     }
     if (!device) {
-      alert('Please Select A Device');
-      return;
+      setDeviceError(true);
+      Error = true;
+    }
+    else{
+      setDeviceError(false);
     }
     if (!functions) {
-      alert('Please Select A Function');
+      setFunctionError(true);
+      Error = true;
+    }
+    else{
+      setFunctionError(false);
+    }
+    if ((functions === 'refresh' || functions === 'refreshfind') && !timer) {
+      setTimerError(true);
+      Error = true;
+    }
+    else{
+      setTimerError(false);
+    }
+    if ((functions === 'find' || functions === 'refreshfind') && (!text || !textCases)) {
+      setTextError(true);
+      Error = true;
+    }
+    else{
+      setTextError(false);
+    }
+    if(Error === true){
+      setFormError(true);
       return;
     }
-    if (functions === 'refresh' && !timer) {
-      alert('Please Select A Valid Timer');
-      return;
-    }
-    if (functions === 'find' && (!text || !textCases)) {
-      alert('Please Select A Valid Text To Find');
-      return;
-    }
-    if (functions === 'refreshfind' && (!timer || !text || !textCases)) {
-      alert('Please Select A Valid Timer And A Valid Text To Find');
-      return;
+    else{
+      setFormError(false);
     }
     var updatedSite = site;
     if (!/^https?:\/\//i.test(site)) {
@@ -155,8 +177,14 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
 
   return (
     <>
-      <Form onSubmit={onSubmit}>
-        <Form.Field>
+      <Form onSubmit={onSubmit} error={formError}>
+        <Message
+          error
+          header='Missing Required Fields'
+          content='Make Sure All Required Fields Are Filled In'
+        />
+        <Form.Field required error={siteError}>
+          <label>Website</label>
           <Input
             placeholder='Insert Link'
             value={site}
@@ -173,7 +201,8 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
             }
           />
         </Form.Field>
-        <Form.Field>
+        <Form.Field required error={deviceError}>
+          <label>View Device</label>
           <Dropdown
             onChange={(e, data) =>  setDevice(data.value)}
             placeholder='Select Device'
@@ -183,7 +212,8 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
             options={deviceOptions}
           />
         </Form.Field>
-        <Form.Field>
+        <Form.Field required error={functionError}>
+          <label>Function</label>
           <Dropdown
             onChange={(e, data) =>  setFunctions(data.value)}
             placeholder='Select Function'
@@ -193,8 +223,9 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
             options={functionOptions}
           />
         </Form.Field>
-        {functions === 'refresh' && 
-          <Form.Field>
+        {(functions === 'refresh' || functions === 'refreshfind') &&
+          <Form.Field required error={timerError}>
+            <label>Refresh Time</label>
             <Input
               placeholder='Amount in Seconds'
               value={timer}
@@ -208,8 +239,9 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
             />
           </Form.Field>
         }
-        {functions === 'find' && 
-          <Form.Field>
+        {(functions === 'find' || functions === 'refreshfind') && 
+          <Form.Field required error={textError}>
+            <label>Find Text</label>
             <Input
               placeholder='Find This Text'
               value={text}
@@ -227,32 +259,6 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
               }
             />
           </Form.Field>
-        }
-        {functions === 'refreshfind' && 
-          <>
-            <Form.Field>
-              <Input
-                placeholder='Amount in Seconds'
-                value={timer}
-                type="number"
-                min="1"
-                step="1"
-                fluid
-                labelPosition='right'
-                label='Seconds'
-                onChange={(e) => setTimer(e.target.value)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <Input
-                placeholder='Find This Text'
-                value={text}
-                type="text"
-                fluid
-                onChange={(e) => setText(e.target.value)}
-              />
-            </Form.Field>
-          </>
         }
         <Button type='submit' onClick={onSubmit}>Submit</Button>
       </Form>
