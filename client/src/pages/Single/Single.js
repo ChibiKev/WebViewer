@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container } from 'semantic-ui-react'
+import { Container, Segment, Dimmer, Loader } from 'semantic-ui-react'
 import Search from '../../components/Search/Search';
 import FoundResult from '../../components/FoundResult/FoundResult';
 import ImageViewer from '../../components/ImageViewer/ImageViewer';
@@ -17,9 +17,12 @@ const Single = () => {
   const [webView, setWebView] = useState('');
   const [found, setFound] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(
     () => {
       const viewImageFunction = async () => {
+        setLoading(true);
         await fetch(`/view/image?url=${site}&device=${device}`)
         .then(response => response.blob())
         .then(blob => {
@@ -27,8 +30,10 @@ const Single = () => {
           setWebView(URL.createObjectURL(blob));
         })
         .catch(error => {console.log(error)})
+        setLoading(false);
       }
       const viewPDFFunction = async () => {
+        setLoading(true);
         await fetch(`/view/pdf?url=${site}&device=${device}`)
         .then(response => response.blob())
         .then(blob => {
@@ -36,8 +41,10 @@ const Single = () => {
           setWebView(URL.createObjectURL(blob));
         })
         .catch(error => {console.log(error)})
+        setLoading(false);
       }
       const viewHTMLFunction = async () => {
+        setLoading(true);
         await fetch(`/view/html?url=${site}&device=${device}`)
         .then(response => response.blob())
         .then(blob => {
@@ -45,8 +52,10 @@ const Single = () => {
           setWebView(URL.createObjectURL(blob));
         })
         .catch(error => {console.log(error)})
+        setLoading(false);
       }
       const findImageFunction = async () => {
+        setLoading(true);
         await fetch(`/find/image?url=${site}&device=${device}&text[text]=${text}&text[cases]=${textCases}`)
         .then(response => response.blob())
         .then(blob => {
@@ -54,8 +63,10 @@ const Single = () => {
           setWebView(URL.createObjectURL(blob));
         })
         .catch(error => {console.log(error)})
+        setLoading(false);
       }
       const findPDFFunction = async () => {
+        setLoading(true);
         await fetch(`/find/pdf?url=${site}&device=${device}&text[text]=${text}&text[cases]=${textCases}`)
         .then(response => response.blob())
         .then(blob => {
@@ -63,8 +74,10 @@ const Single = () => {
           setWebView(URL.createObjectURL(blob));
         })
         .catch(error => {console.log(error)})
+        setLoading(false);
       }
       const findHTMLFunction = async () => {
+        setLoading(true);
         await fetch(`/find/html?url=${site}&device=${device}&text[text]=${text}&text[cases]=${textCases}`)
         .then(response => response.blob())
         .then(blob => {
@@ -72,6 +85,7 @@ const Single = () => {
           setWebView(URL.createObjectURL(blob));
         })
         .catch(error => {console.log(error)})
+        setLoading(false);
       }
       if(functions === 'view'){
         if(view === 'image'){
@@ -137,17 +151,23 @@ const Single = () => {
         textChange={(textChange) => setText(textChange)}
         textCasesChange={(textCasesChange) => setTextCases(textCasesChange)}
       />
-      {functions === 'find' && 
-        <FoundResult Site={site} Text={text} Found={found} />
-      }
-      {view === 'image' && 
-        <ImageViewer WebView={webView} Site={site} />
-      }
-      {view === 'PDF' && 
-        <PDFViewer WebView={webView} Site={site} />
-      }
-      {view === 'HTML' && 
-        <HTMLViewer WebView={webView} Site={site} />
+      {loading ? 
+          <Loader active={loading} size='large' inline='centered' />
+        :
+        <>
+          {functions === 'find' && 
+            <FoundResult Site={site} Text={text} Found={found} />
+          }
+          {view === 'image' && 
+            <ImageViewer WebView={webView} Site={site} />
+          }
+          {view === 'PDF' && 
+            <PDFViewer WebView={webView} Site={site} />
+          }
+          {view === 'HTML' && 
+            <HTMLViewer WebView={webView} Site={site} />
+          }
+        </>
       }
     </Container>
   );
