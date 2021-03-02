@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Segment, Dimmer, Loader } from 'semantic-ui-react'
+import { Container, Loader } from 'semantic-ui-react'
 import Search from '../../components/Search/Search';
 import FoundResult from '../../components/FoundResult/FoundResult';
 import ImageViewer from '../../components/ImageViewer/ImageViewer';
