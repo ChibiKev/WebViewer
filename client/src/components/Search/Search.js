@@ -101,9 +101,9 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
 
   const functionOptions = [
     { key: 'view', value: 'view', text: 'View' },
-    { key: 'refresh', value: 'refresh', text: 'Refresh', disabled: true },
+    { key: 'refresh', value: 'refresh', text: 'Refresh' },
     { key: 'find', value: 'find', text: 'Find' },
-    { key: 'refreshfind', value: 'refreshfind', text: 'Refresh + Find', disabled: true },
+    { key: 'refreshfind', value: 'refreshfind', text: 'Refresh + Find' },
   ]
 
   const viewOptions = [

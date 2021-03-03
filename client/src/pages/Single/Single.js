@@ -126,14 +126,19 @@ const Single = () => {
         }
       }
       else if(functions === 'refreshfind'){
+        fetch(`/find/text?url=${site}&text[text]=${text}&text[cases]=${textCases}`)
+        .then(response => response.json())
+        .then(response => setFound(response))
+        .catch(error => {console.log(error)})
+        
         if(view === 'image'){
-          viewImageFunction();
+          setInterval(findImageFunction, timer*1000);
         }
         else if(view === 'PDF'){
-          viewPDFFunction();
+          setInterval(findPDFFunction, timer*1000);
         }
         else if(view === 'HTML'){
-          viewHTMLFunction();
+          setInterval(findHTMLFunction, timer*1000);
         }
       }
     },
@@ -152,10 +157,10 @@ const Single = () => {
         textCasesChange={(textCasesChange) => setTextCases(textCasesChange)}
       />
       {loading ? 
-          <Loader active={loading} size='large' inline='centered' />
+        <Loader active={loading} size='large' inline='centered' />
         :
         <>
-          {functions === 'find' && 
+          {(functions === 'find' || functions === 'refreshfind') && 
             <FoundResult Site={site} Text={text} Found={found} />
           }
           {view === 'image' && 
