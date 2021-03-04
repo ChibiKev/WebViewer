@@ -87,6 +87,52 @@ const Single = () => {
         .catch(error => {console.log(error)})
         setLoading(false);
       }
+      const refreshfindImageFunction = async () => {
+        setLoading(true);
+        await fetch(`/find/text?url=${site}&text[text]=${text}&text[cases]=${textCases}`)
+        .then(response => response.json())
+        .then(response => setFound(response))
+        .catch(error => {console.log(error)})
+        await fetch(`/find/image?url=${site}&device=${device}&text[text]=${text}&text[cases]=${textCases}`)
+        .then(response => response.blob())
+        .then(blob => {
+          setWebView('');
+          setWebView(URL.createObjectURL(blob));
+        })
+        .catch(error => {console.log(error)})
+        setLoading(false);
+      }
+      const refreshfindPDFFunction = async () => {
+        setLoading(true);
+        await fetch(`/find/text?url=${site}&text[text]=${text}&text[cases]=${textCases}`)
+        .then(response => response.json())
+        .then(response => setFound(response))
+        .catch(error => {console.log(error)})
+        await fetch(`/find/pdf?url=${site}&device=${device}&text[text]=${text}&text[cases]=${textCases}`)
+        .then(response => response.blob())
+        .then(blob => {
+          setWebView('');
+          setWebView(URL.createObjectURL(blob));
+        })
+        .catch(error => {console.log(error)})
+        setLoading(false);
+      }
+      const refreshfindHTMLFunction = async () => {
+        setLoading(true);
+        await fetch(`/find/text?url=${site}&text[text]=${text}&text[cases]=${textCases}`)
+        .then(response => response.json())
+        .then(response => setFound(response))
+        .catch(error => {console.log(error)})
+        await fetch(`/find/html?url=${site}&device=${device}&text[text]=${text}&text[cases]=${textCases}`)
+        .then(response => response.blob())
+        .then(blob => {
+          setWebView('');
+          setWebView(URL.createObjectURL(blob));
+        })
+        .catch(error => {console.log(error)})
+        setLoading(false);
+      }
+
       if(functions === 'view'){
         if(view === 'image'){
           viewImageFunction();
@@ -99,15 +145,17 @@ const Single = () => {
         }
       }
       else if(functions === 'refresh'){
+        var interval;
         if(view === 'image'){
-          setInterval(viewImageFunction, timer*1000);
+          interval = setInterval(viewImageFunction, timer*1000);
         }
         else if(view === 'PDF'){
-          setInterval(viewPDFFunction, timer*1000);
+          interval = setInterval(viewPDFFunction, timer*1000);
         }
         else if(view === 'HTML'){
-          setInterval(viewHTMLFunction, timer*1000);
+          interval = setInterval(viewHTMLFunction, timer*1000);
         }
+        return () => clearInterval(interval);
       }
       else if(functions === 'find'){
         fetch(`/find/text?url=${site}&text[text]=${text}&text[cases]=${textCases}`)
@@ -126,20 +174,17 @@ const Single = () => {
         }
       }
       else if(functions === 'refreshfind'){
-        fetch(`/find/text?url=${site}&text[text]=${text}&text[cases]=${textCases}`)
-        .then(response => response.json())
-        .then(response => setFound(response))
-        .catch(error => {console.log(error)})
-        
+        var interval;
         if(view === 'image'){
-          setInterval(findImageFunction, timer*1000);
+          interval = setInterval(refreshfindImageFunction, timer*1000);
         }
         else if(view === 'PDF'){
-          setInterval(findPDFFunction, timer*1000);
+          interval = setInterval(refreshfindPDFFunction, timer*1000);
         }
         else if(view === 'HTML'){
-          setInterval(findHTMLFunction, timer*1000);
+          interval = setInterval(refreshfindHTMLFunction, timer*1000);
         }
+        return () => clearInterval(interval);
       }
     },
     [site, device, functions, view, timer, text, textCases],
