@@ -32,9 +32,9 @@ const Navbar = () => {
         />
         <Menu.Item
           as={Link}
-          to={'/Functions'}
-          name='Functions'
-          active={activeItem === 'Functions'}
+          to={'/User'}
+          name='User'
+          active={activeItem === 'User'}
           onClick={handleItemClick}
         />
       </Menu>

@@ -145,7 +145,7 @@ const Single = () => {
         }
       }
       else if(functions === 'refresh'){
-        var interval;
+        let interval;
         if(view === 'image'){
           interval = setInterval(viewImageFunction, timer*1000);
         }
@@ -174,7 +174,7 @@ const Single = () => {
         }
       }
       else if(functions === 'refreshfind'){
-        var interval;
+        let interval;
         if(view === 'image'){
           interval = setInterval(refreshfindImageFunction, timer*1000);
         }
