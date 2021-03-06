@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Form, Input, Dropdown, Message, Button } from 'semantic-ui-react';
 
-import './Search.css';
-
 const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChange, textChange, textCasesChange}) => {
   const [site, setSite] = useState('');
   const [view, setView] = useState('');

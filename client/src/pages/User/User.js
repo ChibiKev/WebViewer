@@ -1,9 +1,17 @@
+import { useState } from 'react';
 import { Container } from 'semantic-ui-react'
+import UserSearch from '../../components/UserSearch/UserSearch';
 
 const User = () => {
+  const [site, setSite] = useState('');
+  const [view, setView] = useState('');
+
   return (
     <Container>
-      This tries to log the user into a website using their account information.
+      <UserSearch
+        siteChange={(siteChange) => setSite(siteChange)}
+        viewChange={(viewChange) => setView(viewChange)}
+      />
     </Container>
   );
 }
