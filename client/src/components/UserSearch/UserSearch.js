@@ -35,8 +35,22 @@ const Search = ({siteChange, viewChange }) => {
     if (!/^https?:\/\//i.test(site)) {
       updatedSite = 'http://' + site;
     }
-    siteChange(updatedSite);
-    viewChange(view);
+    if(siteCheck(updatedSite)){
+      setFormError(true);
+      return;
+    }
+    else{
+      setFormError(false);
+      siteChange(updatedSite);
+      viewChange(view);
+    }
+  }
+
+  const siteCheck = async (updatedSite) => {
+    await fetch(`/userCheck/properties?url=${updatedSite}`)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(error => {console.log(error)})
   }
 
   return (
