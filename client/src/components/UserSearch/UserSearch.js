@@ -4,6 +4,7 @@ import { Form, Input, Dropdown, Message, Button } from 'semantic-ui-react';
 const Search = ({siteChange, viewChange }) => {
   const [site, setSite] = useState('');
   const [view, setView] = useState('');
+  const [properties, setProperties] = useState('');
 
   const [formError, setFormError] = useState(false);
   const [siteError, setSiteError] = useState(false);
@@ -33,23 +34,15 @@ const Search = ({siteChange, viewChange }) => {
     }
     var updatedSite = site;
     if (!/^https?:\/\//i.test(site)) {
-      updatedSite = 'http://' + site;
+      updatedSite = 'https://' + site;
     }
-    if(siteCheck(updatedSite)){
-      setFormError(true);
-      return;
-    }
-    else{
-      setFormError(false);
-      siteChange(updatedSite);
-      viewChange(view);
-    }
+    siteCheck(updatedSite);
   }
 
   const siteCheck = async (updatedSite) => {
     await fetch(`/userCheck/properties?url=${updatedSite}`)
     .then(response => response.json())
-    .then(response => console.log(response))
+    .then(response => setProperties(response))
     .catch(error => {console.log(error)})
   }
 

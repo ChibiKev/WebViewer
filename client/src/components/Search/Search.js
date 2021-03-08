@@ -162,7 +162,7 @@ const Search = ({siteChange, viewChange, functionChange, deviceChange, timerChan
     }
     var updatedSite = site;
     if (!/^https?:\/\//i.test(site)) {
-      updatedSite = 'http://' + site;
+      updatedSite = 'https://' + site;
     }
     siteChange(updatedSite);
     viewChange(view);
