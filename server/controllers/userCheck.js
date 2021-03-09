@@ -13,10 +13,10 @@ router.get('/properties', async (req, res) => {
     const page = await browser.newPage();
     await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
     const pageInputs = await page.evaluate(() => Array.from(document.querySelectorAll('input'), element => element.outerHTML));
-    let username = false;
-    let email = false;
-    let phone = false;
-    let password = false;
+    var username = false;
+    var email = false;
+    var phone = false;
+    var password = false;
 
     for(const input of pageInputs){
       let input_lower = input.toLowerCase();

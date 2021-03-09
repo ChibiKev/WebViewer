@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { Form, Input, Dropdown, Message, Button } from 'semantic-ui-react';
+import { Form, Input, Dropdown, Message, Button, Loader } from 'semantic-ui-react';
 
-const Search = ({siteChange, viewChange }) => {
+const UserSearch = ({siteChange, viewChange, propertiesChange }) => {
   const [site, setSite] = useState('');
   const [view, setView] = useState('');
   const [properties, setProperties] = useState('');
 
   const [formError, setFormError] = useState(false);
   const [siteError, setSiteError] = useState(false);
+  const [propertiesError, setPropertiesError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const viewOptions = [
     { key: 'image', value: 'image', text: 'Image' },
@@ -15,7 +17,7 @@ const Search = ({siteChange, viewChange }) => {
     { key: 'HTML', value: 'HTML', text: 'HTML' },
   ]
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     var Error = false;
     if (!site || !view) {
@@ -36,18 +38,32 @@ const Search = ({siteChange, viewChange }) => {
     if (!/^https?:\/\//i.test(site)) {
       updatedSite = 'https://' + site;
     }
-    siteCheck(updatedSite);
-  }
-
-  const siteCheck = async (updatedSite) => {
+    setLoading(true);
     await fetch(`/userCheck/properties?url=${updatedSite}`)
     .then(response => response.json())
-    .then(response => setProperties(response))
-    .catch(error => {console.log(error)})
+    .then(response => {
+      setProperties(response);
+      if(!((response.username || response.email || response.phone) && response.password)){
+        setPropertiesError(true);
+        return;
+      }
+      setPropertiesError(false);
+      siteChange(site);
+      viewChange(view);
+      propertiesChange(properties);
+    })
+    .catch(error => console.log(error))
+    setLoading(false);
   }
 
   return (
     <>
+      {propertiesError === true &&
+        <Message negative>
+          <Message.Header>This Site Does Not Ask For Any Login Credentials</Message.Header>
+          <p>Please Use The Site's Login Page</p>
+        </Message>
+      }
       <Form onSubmit={onSubmit} error={formError}>
         <Message
           error
@@ -74,8 +90,11 @@ const Search = ({siteChange, viewChange }) => {
         </Form.Field>
         <Button type='submit' onClick={onSubmit}>Check Site</Button>
       </Form>
+      {loading && 
+        <Loader active={loading} size='large' inline='centered' />
+      }
     </>
   );
 }
 
-export default Search;
+export default UserSearch;
