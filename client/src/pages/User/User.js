@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Container } from 'semantic-ui-react'
 import UserSearch from '../../components/UserSearch/UserSearch';
+import Account from '../../components/Account/Account';
 
 const User = () => {
   const [site, setSite] = useState('');
@@ -14,6 +15,9 @@ const User = () => {
         viewChange={(viewChange) => setView(viewChange)}
         propertiesChange={(propertiesChange) => setProperties(propertiesChange)}
       />
+      {((properties.username || properties.email || properties.phone) && properties.password) &&
+        <Account />
+      }
     </Container>
   );
 }

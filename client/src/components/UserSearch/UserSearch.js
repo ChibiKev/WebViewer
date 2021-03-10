@@ -4,7 +4,6 @@ import { Form, Input, Dropdown, Message, Button, Loader } from 'semantic-ui-reac
 const UserSearch = ({siteChange, viewChange, propertiesChange }) => {
   const [site, setSite] = useState('');
   const [view, setView] = useState('');
-  const [properties, setProperties] = useState('');
 
   const [formError, setFormError] = useState(false);
   const [siteError, setSiteError] = useState(false);
@@ -42,7 +41,7 @@ const UserSearch = ({siteChange, viewChange, propertiesChange }) => {
     await fetch(`/userCheck/properties?url=${updatedSite}`)
     .then(response => response.json())
     .then(response => {
-      setProperties(response);
+      propertiesChange(response);
       if(!((response.username || response.email || response.phone) && response.password)){
         setPropertiesError(true);
         return;
@@ -50,7 +49,6 @@ const UserSearch = ({siteChange, viewChange, propertiesChange }) => {
       setPropertiesError(false);
       siteChange(site);
       viewChange(view);
-      propertiesChange(properties);
     })
     .catch(error => console.log(error))
     setLoading(false);
