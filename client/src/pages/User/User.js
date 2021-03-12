@@ -16,7 +16,7 @@ const User = () => {
         propertiesChange={(propertiesChange) => setProperties(propertiesChange)}
       />
       {((properties.username || properties.email || properties.phone) && properties.password) &&
-        <Account />
+        <Account Site={site} />
       }
     </Container>
   );
