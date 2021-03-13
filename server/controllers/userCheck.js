@@ -48,4 +48,33 @@ router.get('/properties', async (req, res) => {
   await browser.close();
 })
 
+router.get('/login', async (req, res) => {
+  const browser = await puppeteer.launch({
+    'args' : [
+      '--no-sandbox',
+      '--disable-setuid-sandbox'
+    ]
+  });
+  try{
+    const page = await browser.newPage();
+    await page.goto(req.query.url, {waitUntil: 'networkidle2'}); // URL is given by the "user" (your client-side application)
+    var user = req.query.user;
+    var pass = req.query.pass;
+    await page.type('[type=text]', user);
+    await page.type('[type=password]', pass);
+    const screenshotBuffer = await page.screenshot({fullPage: true});
+  
+    // Respond with the image
+    res.writeHead(200, {
+      'Content-Type': 'image/png',
+      'Content-Length': screenshotBuffer.length
+    });
+    res.end(screenshotBuffer);
+  }
+  catch(error){
+    console.log(error);
+  }
+  await browser.close();
+})
+
 module.exports = router;
